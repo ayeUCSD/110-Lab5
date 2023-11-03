@@ -104,12 +104,27 @@ class AppFrame extends FlowPane {
 
             // the file that will contain the audio data
             File audioFile = new File("recording.wav");
-            AudioSystem.write(
-                    audioInputStream,
-                    AudioFileFormat.Type.WAVE,
-                    audioFile);
-            recordingLabel.setVisible(false);
-        } catch (Exception ex) {
+
+            Thread t = new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                AudioSystem.write(
+                                        audioInputStream,
+                                        AudioFileFormat.Type.WAVE,
+                                        audioFile);
+                                
+                            } catch (Exception e1) {
+                            }
+                            recordingLabel.setVisible(false);
+                        }
+                    });
+            t.start();
+
+        } catch (
+
+        Exception ex) {
             ex.printStackTrace();
         }
     }
